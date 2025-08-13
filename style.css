@@ -231,3 +231,194 @@ button:hover{
     pointer-events: none; /* clicks pass through */
     z-index: 9999;
 }
+
+/* ===== General Styles ===== */
+
+.ghost {
+    background: none;
+    border: none;
+    padding: 4px 6px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+section {
+    padding: 40px 20px;
+}
+
+/* ===== Wish Section ===== */
+.wish-section {
+    max-width: 900px;
+    margin: 0 auto;
+    background: linear-gradient(180deg, rgba(10,32,22,.85), rgba(10,32,22,.55));
+    padding: 30px 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.wish-section h2 {
+    font-family: 'Cedarville Cursive', cursive;
+    font-size: 32px;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #006600;
+}
+
+.wish-section form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.wish-section input,
+.wish-section select,
+.wish-section textarea {
+    flex: 1 1 200px;
+    padding: 8px 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+.wish-section textarea {
+    flex-basis: 100%;
+    resize: vertical;
+    min-height: 60px;
+}
+
+.wish-section form button {
+    padding: 8px 14px;
+    border-radius: 6px;
+    background: #006600;
+    color: #fff;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+.wish-section form button:hover {
+    background: #009900;
+}
+
+.counters {
+    display: flex;
+    justify-content: space-around;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.counters span {
+    padding: 6px 10px;
+    border-radius: 6px;
+    background: #e0ffe0;
+}
+
+.wish-section > div label {
+    margin-right: 12px;
+    font-weight: bold;
+}
+
+#wishForm + div input, #wishForm + div select {
+    margin-right: 12px;
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+/* ===== Wish Cards ===== */
+#wishCount, #loveCount, #footCount {
+    display: inline-block;
+    margin-right: 12px;
+}
+
+#wishForm + div {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+#wishForm + div input {
+    min-width: 150px;
+}
+
+#wishForm + div select {
+    min-width: 120px;
+}
+
+#wishForm + div label {
+    margin-right: 12px;
+}
+
+#wishForm + div input#search {
+    flex: 1;
+    min-width: 180px;
+    padding: 6px 10px;
+}
+
+#wishForm + div {
+    margin-bottom: 20px;
+}
+
+#wishForm + div label, #wishForm + div input, #wishForm + div select {
+    font-size: 14px;
+}
+
+/* ===== Grid of Wishes ===== */
+#wish-section {
+    display: flex;
+    flex-direction: column;
+}
+
+#wish-section article {
+    margin-bottom: 16px;
+}
+
+#wish-section .wish {
+    background: #f9f9f9;
+    border-left: 6px solid #006600;
+    border-radius: 8px;
+    padding: 12px 16px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    transition: 0.2s;
+}
+
+#wish-section .wish:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.wish .metaRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 6px;
+    font-size: 13px;
+    color: #555;
+}
+
+.wish button.ghost {
+    font-size: 14px;
+    color: #006600;
+    margin-left: 6px;
+}
+
+.wish button.ghost:hover {
+    color: #009900;
+}
+
+/* ===== Empty state ===== */
+#empty {
+    text-align: center;
+    color: #888;
+    font-style: italic;
+    padding: 20px 0;
+}
+
+/* ===== Canvas styling ===== */
+canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 1000;
+}

@@ -46,6 +46,50 @@
         </div>
     </div>
 </div>
+
+<section class="wish-section">
+    <h2>🇵🇰 Wish Wall</h2>
+    <form id="wishForm">
+        <input type="text" id="name" placeholder="Your Name">
+        <input type="text" id="city" placeholder="City">
+        <select id="lang">
+            <option value="auto">Auto Detect Language</option>
+            <option value="en">English</option>
+            <option value="ur">Urdu</option>
+        </select>
+        <textarea id="wish" placeholder="Your wish for Pakistan"></textarea>
+        <button type="submit">Add Wish</button>
+        <button type="button" id="btnClear">Clear All</button>
+    </form>
+
+    <div class="counters">
+        <span id="wishCount">📝 0 wishes</span>
+        <span id="loveCount">❤️ 0 hearts</span>
+        <span id="footCount">👥 0 joined</span>
+    </div>
+
+    <div>
+        <label>Filter Language:
+            <select id="filterLang">
+                <option value="all">All</option>
+                <option value="en">English</option>
+                <option value="ur">Urdu</option>
+            </select>
+        </label>
+        <label>Sort By:
+            <select id="sortBy">
+                <option value="latest">Latest</option>
+                <option value="hearts">Most Loved</option>
+            </select>
+        </label>
+        <input type="text" id="search" placeholder="Search wishes">
+    </div>
+
+    <div id="grid" role="list"></div>
+    <div id="empty">No wishes yet. Be the first!</div>
+</section>
+
+
 <canvas id="confettiCanvas"></canvas>
 <canvas id="fireworksCanvas"></canvas>
 
