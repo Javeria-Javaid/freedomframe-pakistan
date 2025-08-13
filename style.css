@@ -1,0 +1,233 @@
+
+body{
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #006A4E, #00805D),
+    url('EmeraldGreenbg.jpg');
+    background-size: cover;
+    background-blend-mode: overlay;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+header{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 150px;
+    background: linear-gradient(180deg, rgba(10,32,22,.85), rgba(10,32,22,.55));
+    color: white;
+
+}
+
+.brand{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: white;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-weight: lighter;
+}
+.icon{
+    height: 40px;
+    width: auto;
+}
+.actions{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap
+}
+button, .btn{
+    margin-right: 12px;
+    cursor:pointer;
+    border: none;
+    border-radius:14px;
+    padding:12px 17px;
+    font-weight:600;
+    background:linear-gradient(180deg, #174a31, #123a27);
+    color:white;
+    transition: transform .08s ease, box-shadow .2s ease;
+    text-decoration:none;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.4); /* glowing outline */
+}
+.secondary{
+    background:whitesmoke;
+    color: #174a31;
+}
+
+button:hover{
+    transform:translateY(-1px)
+}
+
+.hero {
+    width: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 70px 50px 50px 150px;
+    gap: 50px;
+}
+.hero-left {
+    width: 52%;
+}
+.plain-btn{
+    background: transparent;
+    border: 1px solid white;
+    padding: 10px 14px;
+    color: white;
+    border-radius: 14px;
+    cursor: pointer;
+    font-weight: 600;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.4); /* glowing outline */
+    transition: all 0.3s ease;
+}
+.primary-txt{
+    color: #afaf22;
+    font-size: 60px;
+    line-height: 55px;
+    font-weight: lighter;
+}
+.secondary-txt{
+    color: white;
+    font-size: 24px;
+}
+.italic-txt{
+    font-family: 'Cedarville Cursive', cursive;
+    font-size: 23px;
+    line-height: 30px;
+    color: #f8f8f8;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3); /* Improves contrast */
+
+}
+.hero-right {
+    flex: 0 0 35%;
+    max-width: 420px;
+}
+.scene-card {
+    width: 100%;
+    max-width: 420px;
+    background: linear-gradient(180deg, rgba(10,32,22,.85), rgba(10,32,22,.55));
+    border-radius: 18px;
+    padding: 24px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+}
+
+.flag-viewport {
+    position: relative;
+    height: 500px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    overflow: hidden;
+    margin: 20px 0;
+}
+.pole {
+    position: absolute;
+    left: 20%;
+    transform: translateX(-50%);
+    bottom: 12px;
+    width: 8px;
+    height: 93%;
+    background: linear-gradient(180deg, #ddd, #bbb);
+    border-radius: 8px;
+    box-shadow: inset -1px 0 2px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.finial {
+    position: absolute;
+    left: 20%;
+    transform: translate(-50%, -100%);
+    bottom: calc(70px + 77%);
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #fff, #d7c08d);
+    z-index: 2;
+}
+
+
+.flag-wrap {
+    position: absolute;
+    left: 21%; /* aligns closer to pole */
+    bottom: 0;
+    width: 60%;
+    max-width: 300px;
+    height: 36%;
+    transform-origin: left center;
+    z-index: 3;
+    transition: bottom 2.0s ease-in-out; /* hoisting animation */
+}
+.flag-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: drop-shadow(0 8px 30px rgba(0, 0, 0, 0.5));
+}
+
+.hoist-controls {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.btn {
+    cursor: pointer;
+    border: none;
+    border-radius: 14px;
+    padding: 12px 24px;
+    font-weight: 600;
+    background: linear-gradient(180deg, #174a31, #123a27);
+    color: white;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+    transition: transform 0.2s;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+}
+
+.btn-ghost {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.celebration {
+    margin-top: 16px;
+    font-weight: 700;
+    font-size: 18px;
+    opacity: 0;
+    transition: opacity 0.5s;
+    color:  #afaf22;
+}
+
+.celebration.show {
+    opacity: 1;
+}
+@keyframes smoothWave {
+    0% { transform: rotate(0deg) skewY(0deg) scaleX(1); }
+    25% { transform: rotate(0.5deg) skewY(1.5deg) scaleX(1.02); }
+    50% { transform: rotate(0deg) skewY(0deg) scaleX(1); }
+    75% { transform: rotate(-0.5deg) skewY(-1.5deg) scaleX(1.02); }
+    100% { transform: rotate(0deg) skewY(0deg) scaleX(1); }
+}
+
+.flag-wave {
+    animation: smoothWave 2.5s infinite ease-in-out;
+    transform-origin: left center;
+    filter: drop-shadow(0 8px 20px rgba(0,0,0,0.3));
+}
+#confettiCanvas, #fireworksCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none; /* clicks pass through */
+    z-index: 9999;
+}

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FreedomFrame-Pakistan </title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cedarville+Cursive&display=swap" rel="stylesheet">
+</head>
+<body>
+<!-- header -->
+<header>
+    <div class="brand">
+    <img class="icon" src="tower.png">
+        <h1>FreedomFrame - Pakistan</h1>
+    </div>
+    <div class="actions">
+        <button class="secondary" id="celebrateBtn" title="Celebrate now">🎆 Celebrate</button>
+        <a class="btn" id="btnShare">📤 Share</a>
+    </div>
+</header>
+
+
+<!-- hoisting section -->
+<!-- Hero Section -->
+<div class="hero">
+    <div class="hero-left">
+        <button class="plain-btn">14 August • FreedomFrame</button>
+        <h1 class="primary-txt"> Pakistan — A nation united with hope</h1>
+        <p class="secondary-txt italic-txt">Boldly raise the flag of unity and carry dreams forward.</p>
+        <p class="secondary-txt">Raise the flag together, add your heartfelt wish for Pakistan,
+            and share the spirit of unity with people across the nation.</p>
+        <button id="hoistBtn">Hoist The Flag</button>
+        <button>Leave a Wish</button>
+    </div>
+
+    <div class="hero-right">
+        <div class="scene-card">
+            <div class="celebration" id="celebrateMsg">پاکستان زندہ باد • Pakistan Zindabad!</div>
+            <div class="flag-viewport">
+                <div class="pole"></div>
+                <div class="finial"></div>
+                <div class="flag-wrap" id="flagWrap">
+                    <img src="world.png" alt="Pakistan Flag" class="flag-img" id="flag">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<canvas id="confettiCanvas"></canvas>
+<canvas id="fireworksCanvas"></canvas>
+
+<script>
+    const flag = document.getElementById('flagWrap');
+    const btn = document.getElementById('hoistBtn');
+    const celebration = document.getElementById('celebrateMsg');
+    const flagImg = document.getElementById('flag');
+    let isHoisted = false;
+
+    // Canvas setup
+    const canvas = document.getElementById('celebrationCanvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let particles = [];
+
+    // Particle class
+    class Particle {
+        constructor(x, y, color, velocity, life, size) {
+            this.x = x;
+            this.y = y;
+            this.color = color;
+            this.velocity = velocity;
+            this.life = life;
+            this.alpha = 1;
+            this.size = size || 4;
+        }
+        draw() {
+            ctx.save();
+            ctx.globalAlpha = this.alpha;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fillStyle = this.color;
+            ctx.fill();
+            ctx.restore();
+        }
+        update() {
+            this.x += this.velocity.x;
+            this.y += this.velocity.y;
+            this.velocity.y += 0.03; // gravity
+            this.alpha -= 0.02;
+            this.life--;
+        }
+    }
+
+    // Firework creation
+    function createFireworks(x, y) {
+        const colors = ['#006600', '#ffffff', '#FFD700']; // green, white, gold
+        for (let i = 0; i < 50; i++) {
+            const angle = (Math.PI * 2 * i) / 50;
+            const speed = Math.random() * 4 + 2;
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            const size = Math.random() * 3 + 2;
+            particles.push(new Particle(
+                x,
+                y,
+                color,
+                { x: Math.cos(angle) * speed, y: Math.sin(angle) * speed },
+                100,
+                size
+            ));
+        }
+    }
+
+    // Animation loop
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for (let i = particles.length - 1; i >= 0; i--) {
+            const p = particles[i];
+            if (p.life <= 0 || p.alpha <= 0) {
+                particles.splice(i, 1);
+            } else {
+                p.update();
+                p.draw();
+            }
+        }
+        requestAnimationFrame(animate);
+    }
+    animate();
+
+    // Celebration trigger function
+    function triggerCelebration() {
+        celebration.classList.add('show');
+        for (let i = 0; i < 5; i++) {
+            setTimeout(() => {
+                createFireworks(Math.random() * canvas.width, Math.random() * canvas.height * 0.5);
+            }, i * 500);
+        }
+    }
+
+    // Hoist button click
+    btn.addEventListener('click', () => {
+        if (!isHoisted) {
+            flag.style.bottom = "calc(77% - 80px)";
+            isHoisted = true;
+            btn.textContent = "Lower the Flag";
+
+            // After hoist finishes
+            setTimeout(() => {
+                flagImg.classList.add('flag-wave');
+                triggerCelebration();
+            }, 1500);
+
+        } else {
+            flag.style.bottom = "0";
+            isHoisted = false;
+            btn.textContent = "Hoist the Flag";
+
+            flagImg.classList.remove('flag-wave');
+            celebration.classList.remove('show');
+        }
+    });
+    // Celebrate button
+    document.getElementById('celebrateBtn').addEventListener('click', () => {
+        triggerCelebration();
+    });
+</script>
+</body>
+</html>

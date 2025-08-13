@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>FreedomFrame — Virtual Flag Hoisting & Wish Wall</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;1,400&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root{
+            --bottle: #006A4E;
+            --emerald:#00805D;
+            --white:#ffffff;
+            --muted: rgba(255,255,255,0.9);
+            --glass: rgba(255,255,255,0.05);
+            --card: rgba(7,30,20,0.55);
+        }
+        *{box-sizing:border-box}
+        html,body{height:100%}
+        body{
+            margin:0;
+            font-family: 'Poppins', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+            color:var(--white);
+            background:
+                    linear-gradient(135deg, rgba(0,106,78,0.92), rgba(0,128,93,0.86)),
+                    url('crescent-star-pattern.png');
+            background-size: cover;
+            background-position: center;
+            background-blend-mode: overlay;
+            -webkit-font-smoothing:antialiased;
+            -moz-osx-font-smoothing:grayscale;
+            overflow-y:auto;
+        }
+
+        /* Header */
+        header {
+            position:sticky;
+            top:0;
+            z-index:60;
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            padding:12px 20px;
+            backdrop-filter: blur(6px);
+            background: linear-gradient(180deg, rgba(6,20,13,0.56), rgba(6,20,13,0.28));
+            border-bottom:1px solid rgba(255,255,255,0.06);
+        }
+        .brand{display:flex;align-items:center;gap:12px}
+        .brand img{height:44px;width:auto;display:block;border-radius:6px;}
+        .brand h1{margin:0;font-family:'Playfair Display', serif;font-style:italic;font-weight:400;font-size:20px;letter-spacing:0.4px}
+        .nav-actions{display:flex;gap:10px;align-items:center}
+        .btn,button{appearance:none;cursor:pointer;border:0;padding:10px 14px;border-radius:14px;font-weight:600;background:linear-gradient(180deg,#174a31,#123a27);color:#fff;text-decoration:none;box-shadow:0 6px 18px rgba(0,0,0,0.25)}
+        .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.08)}
+        .btn.secondary{background:#fff;color:var(--bottle);font-weight:700}
+
+        /* Hero */
+        .hero{
+            min-height:72vh;
+            display:grid;
+            grid-template-columns: 1fr min(760px, 55%);
+            gap:40px;
+            align-items:center;
+            padding:48px 6%;
+        }
+        .hero-left{
+            color:var(--white);
+            max-width:680px;
+        }
+        .eyebrow{display:inline-block;padding:6px 12px;border-radius:999px;background:rgba(255,255,255,0.06);font-weight:600;margin-bottom:18px}
+        .title{
+            font-family:'Playfair Display',serif;
+            font-size:clamp(32px,6vw,56px);
+            line-height:1.02;
+            margin:0 0 14px;
+            font-weight:400;
+        }
+        .quote{
+            font-family:'Great Vibes', cursive;
+            font-size:28px;
+            margin:0 0 18px;
+            opacity:0.98;
+        }
+        .subtitle{
+            font-size:16px;
+            opacity:0.95;
+            margin-bottom:22px;
+            max-width:50ch;
+        }
+        .hero-cta{display:flex;gap:12px;flex-wrap:wrap}
+
+        /* Right column: Vertical flag scene card */
+        .hero-right{
+            display:flex;
+            justify-content:center;
+            align-items:center;
+        }
+        .scene-card{
+            width:100%;
+            max-width:420px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+            border-radius:18px;
+            padding:18px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.45);
+            border:1px solid rgba(255,255,255,0.05);
+        }
+
+        /* Flag hoist area */
+        .flag-viewport{position:relative;height:320px;display:flex;align-items:flex-end;justify-content:center;overflow:hidden;padding-bottom:8px}
+        .pole{position:absolute;left:50%;transform:translateX(-50%);bottom:12px;width:8px;height:78%;background:linear-gradient(180deg,#ddd,#bbb);border-radius:8px;box-shadow:inset -1px 0 2px rgba(0,0,0,0.2)}
+        .finial{position:absolute;left:50%;transform:translate(-50%,-100%);bottom:calc(12px + 78%);width:18px;height:18px;border-radius:50%;background:radial-gradient(circle at 30% 30%, #fff, #d7c08d);}
+        .flag-wrap{position:absolute;left:calc(50% + 8px);bottom:12px;width:60%;max-width:300px;height:36%;transform-origin:left center;transform:translateY(60%);}
+        .flag-img{width:100%;height:100%;object-fit:cover;display:block;filter:drop-shadow(0 8px 30px rgba(0,0,0,0.5));}
+
+        .hoist-controls{display:flex;gap:10px;justify-content:center;margin-top:14px}
+
+        /* Celebrate overlay text */
+        .celebration{
+            display:none;
+            text-align:center;
+            margin-top:10px;
+            font-weight:700;
+            font-size:18px;
+        }
+        .celebration.show{display:block;color:var(--white);}
+
+        /* Wish wall */
+        .wish-section{
+            padding:40px 6%;
+            display:block;
+        }
+        .wish-grid-wrap{max-width:1100px;margin:0 auto}
+        .wish-panel{
+            display:grid;
+            grid-template-columns: 1fr 420px;
+            gap:24px;
+            align-items:start;
+        }
+
+        /* Left: wall cards */
+        .wall{
+            background:var(--card);
+            border-radius:14px;
+            padding:18px;
+            border:1px solid rgba(255,255,255,0.04);
+            min-height:240px;
+        }
+        .wall .controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
+        .wall .controls input, .wall .controls select{padding:10px 12px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:var(--white)}
+        .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+
+        .wish-card{
+            background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+            border-radius:12px;padding:12px;border:1px solid rgba(255,255,255,0.04);
+            min-height:72px;
+        }
+        .wish-card .meta{display:flex;justify-content:space-between;align-items:center;margin-top:10px;font-size:13px;opacity:0.9}
+
+        /* Right: submit form */
+        .submit-card{
+            background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+            border-radius:12px;padding:16px;border:1px solid rgba(255,255,255,0.04);
+        }
+        label{display:block;font-size:13px;margin-bottom:8px}
+        input[type="text"], textarea{width:100%;padding:10px 12px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:var(--white);resize:vertical}
+        textarea{min-height:100px}
+        .muted{opacity:0.85;font-size:13px}
+
+        /* Footer */
+        footer{padding:18px 6%;text-align:center;border-top:1px solid rgba(255,255,255,0.03);opacity:0.95}
+
+        /* responsive */
+        @media (max-width:1000px){
+            .hero{grid-template-columns:1fr;gap:26px;padding:34px 6%}
+            .flag-viewport{height:280px}
+            .wish-panel{grid-template-columns:1fr}
+            .submit-card{order:2}
+        }
+        @media (max-width:520px){
+            .title{font-size:28px}
+            .quote{font-size:22px}
+        }
+    </style>
+</head>
+<body>
+
+<!-- Audio (anthem) -->
+<audio id="anthem" preload="auto">
+    <source src="https://upload.wikimedia.org/wikipedia/commons/5/5e/National_anthem_of_Pakistan_instrumental.ogg" type="audio/ogg">
+</audio>
+
+<header>
+    <div class="brand">
+        <img src="tower.png" alt="logo">
+        <h1>FreedomFrame — Pakistan</h1>
+    </div>
+    <div class="nav-actions">
+        <button class="btn" id="btnHome">Home</button>
+        <button class="btn" id="btnHoistPage">Hoist Flag</button>
+        <button class="btn" id="btnWishPage">Wish Wall</button>
+        <button class="btn secondary" id="btnCelebrate">🎆 Celebrate</button>
+    </div>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="home">
+    <div class="hero-left">
+        <span class="eyebrow">14 August • FreedomFrame</span>
+        <h2 class="title">FreedomFrame — A nation united in hope</h2>
+        <div class="quote">“Boldly raise the flag of unity and carry our dreams forward.”</div>
+        <p class="subtitle">Raise the flag together, add your heartfelt wish for Pakistan, and share the spirit of unity with people across the nation.</p>
+
+        <div class="hero-cta">
+            <button class="btn" id="gotoHoist">🏴 Hoist the Flag</button>
+            <button class="btn ghost" id="gotoWish">✍️ Leave a Wish</button>
+        </div>
+    </div>
+
+    <div class="hero-right">
+        <div class="scene-card" aria-hidden="false">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+                <strong>Virtual Flag Hoisting</strong>
+                <small class="muted" id="joinedCount">0 joined</small>
+            </div>
+
+            <div class="flag-viewport" role="region" aria-label="Flag hoisting area">
+                <div class="pole" aria-hidden="true"></div>
+                <div class="finial" aria-hidden="true"></div>
+
+                <div class="flag-wrap" id="flagWrap" aria-hidden="false">
+                    <!-- Replace with vector/svg for crispness -->
+                    <img src="world.png" alt="Pakistan flag" class="flag-img" id="flagImg">
+                </div>
+            </div>
+
+            <div class="hoist-controls">
+                <button class="btn" id="hoistBtn">Hoist the Flag</button>
+                <button class="btn ghost" id="previewBtn">Preview</button>
+            </div>
+
+            <div class="celebration muted" id="celebrateMsg">پاکستان زندہ باد • Pakistan Zindabad!</div>
+        </div>
+    </div>
+</section>
+
+<!-- WISH WALL -->
+<section class="wish-section" id="wishes">
+    <div class="wish-grid-wrap">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px">
+            <h2 style="margin:0">Digital Wish Wall</h2>
+            <div class="muted">Share your wish for our nation — instant preview below.</div>
+        </div>
+
+        <div class="wish-panel">
+            <!-- Left: wall -->
+            <div class="wall">
+                <div class="controls" style="margin-bottom:12px">
+                    <input type="text" id="search" placeholder="Search wishes..." aria-label="Search wishes">
+                    <select id="filterLang" title="Filter by language">
+                        <option value="all">All languages</option>
+                        <option value="ur">Urdu</option>
+                        <option value="en">English</option>
+                    </select>
+                    <select id="sortBy" title="Sort by">
+                        <option value="latest">Latest</option>
+                        <option value="hearts">Most loved</option>
+                    </select>
+                </div>
+
+                <div id="grid" class="grid" role="list" aria-live="polite"></div>
+                <div id="empty" style="opacity:.9;text-align:center;padding:20px">No wishes yet — be the first! 💫</div>
+            </div>
+
+            <!-- Right: form -->
+            <aside class="submit-card" aria-labelledby="submitLabel">
+                <div id="submitLabel" style="font-weight:700;margin-bottom:8px">Add Your Wish</div>
+                <form id="wishForm" autocomplete="off">
+                    <label>Name (optional)
+                        <input type="text" id="name" maxlength="40" placeholder="e.g., Ayesha / Ali / Anonymous">
+                    </label>
+
+                    <label>Your Wish
+                        <textarea id="wish" maxlength="240" placeholder="Write from the heart…"></textarea>
+                    </label>
+
+                    <label>City (optional)
+                        <input type="text" id="city" maxlength="40" placeholder="Lahore, Karachi, Islamabad…">
+                    </label>
+
+                    <label>Language
+                        <select id="lang">
+                            <option value="auto">Auto-detect</option>
+                            <option value="ur">Urdu</option>
+                            <option value="en">English</option>
+                        </select>
+                    </label>
+
+                    <div style="display:flex;gap:10px;margin-top:12px">
+                        <button class="btn" type="submit">➕ Add Wish</button>
+                        <button class="btn ghost" type="button" id="clearBtn">🧹 Clear Local</button>
+                    </div>
+                    <div style="margin-top:12px;font-size:13px" class="muted">Wishes stored locally for now. Connect to Firebase/Supabase for real-time sharing.</div>
+                </form>
+            </aside>
+        </div>
+    </div>
+</section>
+
+<footer>
+    © <span id="yr"></span> FreedomFrame — Made with 💚 in Pakistan
+</footer>
+
+<!-- Confetti canvas (behind celebration) -->
+<canvas id="confetti" style="position:fixed;inset:0;pointer-events:none;z-index:50;mix-blend-mode:screen"></canvas>
+
+<script>
+    /* ---------------------------
+      Utilities & initial state
+    ----------------------------*/
+    const $ = s => document.querySelector(s);
+    const random = (min,max)=> Math.random()*(max-min)+min;
+    const isUrdu = txt => /[\u0600-\u06FF]/.test(txt);
+
+    const storeKey = 'freedomframe-wishes-v1';
+    let wishes = [];
+    try { wishes = JSON.parse(localStorage.getItem(storeKey))||[] } catch(e){ wishes = [] }
+
+    const joinedKey = 'freedomframe-joined';
+    let joined = Number(localStorage.getItem(joinedKey) || 0);
+    $('#joinedCount').textContent = `${joined} joined`;
+
+    /* ---------------------------
+      Confetti (simple)
+    ----------------------------*/
+    const confetti = document.getElementById('confetti');
+    const cctx = confetti.getContext('2d');
+    function resizeCanvas(){ confetti.width = innerWidth; confetti.height = innerHeight; }
+    addEventListener('resize', resizeCanvas); resizeCanvas();
+
+    const confettiBits = [];
+    function spawnConfetti(count=120){
+        for(let i=0;i<count;i++){
+            confettiBits.push({
+                x: random(0, innerWidth), y: random(-200, -20),
+                size: random(6,14), vx: random(-1,1), vy: random(1,3),
+                rot: random(0,Math.PI*2), vr: random(-0.08,0.08),
+                col: Math.random()<0.75 ? '#0a7d44' : '#fff'
+            });
+        }
+    }
+    function confettiLoop(){
+        cctx.clearRect(0,0,confetti.width,confetti.height);
+        for(let i=confettiBits.length-1;i>=0;i--){
+            const b = confettiBits[i];
+            b.vy += 0.02; b.x += b.vx; b.y += b.vy; b.rot += b.vr;
+            cctx.save(); cctx.translate(b.x,b.y); cctx.rotate(b.rot);
+            cctx.fillStyle = b.col; cctx.fillRect(-b.size/2, -b.size/2, b.size, b.size*1.4);
+            cctx.restore();
+            if(b.y > innerHeight + 30) confettiBits.splice(i,1);
+        }
+        requestAnimationFrame(confettiLoop);
+    }
+    confettiLoop();
+
+    /* ---------------------------
+      Flag hoisting animation
+    ----------------------------*/
+    const flagWrap = $('#flagWrap');
+    let hoisted = false;
+    const anthem = $('#anthem');
+
+    function animateHoist(duration=4200){
+        if(hoisted) return;
+        hoisted = true;
+        // update joined
+        joined++; localStorage.setItem(joinedKey, String(joined)); $('#joinedCount').textContent = `${joined} joined`;
+
+        // audio play (some browsers require user gesture)
+        try{ anthem.currentTime = 0; anthem.play().catch(()=>{}); }catch(e){}
+
+        // animate using JS for easing control
+        const start = performance.now();
+        const from = 60; // starting translateY %
+        const to = 0;    // final
+        function frame(t){
+            const p = Math.min(1, (t - start)/duration);
+            // cubic ease-out
+            const ease = 1 - Math.pow(1 - p, 3);
+            const y = from + (to - from) * ease;
+            flagWrap.style.transform = `translateY(${y}%)`;
+            if(p < 1) requestAnimationFrame(frame);
+            else onHoisted();
+        }
+        requestAnimationFrame(frame);
+    }
+
+    function previewHoist(){
+        if(hoisted) return;
+        // small up motion
+        flagWrap.style.transition = 'transform 0.9s cubic-bezier(.2,.9,.2,1)';
+        flagWrap.style.transform = 'translateY(44%)';
+        setTimeout(()=> flagWrap.style.transform = 'translateY(60%)', 900);
+        setTimeout(()=> flagWrap.style.transition = '', 1300);
+    }
+
+    function onHoisted(){
+        // show celebration text + confetti
+        $('#celebrateMsg').classList.add('show');
+        $('#celebrateMsg').textContent = 'پاکستان زندہ باد • Pakistan Zindabad!';
+        spawnConfetti(180);
+    }
+
+    /* Buttons */
+    $('#hoistBtn').addEventListener('click', animateHoist);
+    $('#previewBtn').addEventListener('click', previewHoist);
+    $('#btnCelebrate').addEventListener('click', ()=>{ spawnConfetti(160); $('#celebrateMsg').classList.add('show'); });
+
+    /* Navigation */
+    const scrollToSection = el => document.querySelector(el).scrollIntoView({behavior:'smooth', block:'center'});
+    $('#gotoHoist').addEventListener('click', ()=> scrollToSection('#home'));
+    $('#gotoWish').addEventListener('click', ()=> scrollToSection('#wishes'));
+    $('#btnHome').addEventListener('click', ()=> scrollToSection('#home'));
+    $('#btnHoistPage').addEventListener('click', ()=> scrollToSection('#home'));
+    $('#btnWishPage').addEventListener('click', ()=> scrollToSection('#wishes'));
+
+    /* ---------------------------
+      Wish wall logic (localStorage)
+    ----------------------------*/
+    const grid = $('#grid'), empty = $('#empty');
+    const state = { filter: 'all', sort: 'latest', q: '' };
+
+    function saveWishes(){ localStorage.setItem(storeKey, JSON.stringify(wishes)); }
+    function renderWishes(){
+        const list = wishes.filter(w=>{
+            if(state.filter !== 'all' && w.lang !== state.filter) return false;
+            if(state.q){
+                const s = (w.text + ' ' + (w.name||'') + ' ' + (w.city||'')).toLowerCase();
+                if(!s.includes(state.q)) return false;
+            }
+            return true;
+        }).sort((a,b)=> state.sort === 'latest' ? b.ts - a.ts : (b.hearts||0) - (a.hearts||0));
+
+        grid.innerHTML = '';
+        list.forEach(w=>{
+            const card = document.createElement('article');
+            card.className = 'wish-card';
+            card.setAttribute('role','listitem');
+            card.dir = w.lang === 'ur' ? 'rtl' : 'ltr';
+
+            const txt = document.createElement('div'); txt.textContent = w.text;
+            const meta = document.createElement('div'); meta.className='meta';
+            const left = document.createElement('div'); left.textContent = `${w.name || 'Anonymous'}${w.city? ' • '+w.city : ''}`;
+            const right = document.createElement('div');
+            const heart = document.createElement('button'); heart.className='btn ghost'; heart.style.padding='6px 9px'; heart.textContent = `❤️ ${w.hearts||0}`;
+            const liked = localStorage.getItem('ff-heart-'+w.id) === '1';
+            heart.setAttribute('aria-pressed', liked? 'true':'false');
+
+            heart.addEventListener('click', ()=>{
+                const already = localStorage.getItem('ff-heart-'+w.id) === '1';
+                if(already){
+                    w.hearts = Math.max(0, (w.hearts||0)-1);
+                    localStorage.removeItem('ff-heart-'+w.id);
+                    heart.setAttribute('aria-pressed','false');
+                } else {
+                    w.hearts = (w.hearts||0) + 1;
+                    localStorage.setItem('ff-heart-'+w.id, '1');
+                    heart.setAttribute('aria-pressed','true');
+                    spawnConfetti(40);
+                }
+                heart.textContent = `❤️ ${w.hearts||0}`;
+                saveWishes(); renderWishes();
+            });
+
+            const shareBtn = document.createElement('button'); shareBtn.className='btn ghost'; shareBtn.style.padding='6px 9px'; shareBtn.textContent='📤';
+            shareBtn.addEventListener('click', async ()=>{
+                const txt = `Wish for Pakistan by ${w.name||'Anonymous'}${w.city? ' from '+w.city : ''}: "${w.text}"`;
+                if(navigator.share){ try{ await navigator.share({title:'FreedomFrame — Wish', text:txt, url: location.href}); }catch(e){} }
+                else { await navigator.clipboard.writeText(`${txt}\n${location.href}`); alert('Copied to clipboard'); }
+            });
+
+            right.appendChild(heart); right.appendChild(shareBtn);
+            meta.appendChild(left); meta.appendChild(right);
+            card.appendChild(txt); card.appendChild(meta);
+            grid.appendChild(card);
+        });
+
+        empty.style.display = list.length ? 'none' : 'block';
+        updateCounts();
+    }
+
+    function updateCounts(){
+        const total = wishes.length;
+        document.getElementById('yr').textContent = new Date().getFullYear();
+    }
+
+    /* Init: seed a couple sample wishes for demo (only first time) */
+    if(!localStorage.getItem('ff-seed')){
+        const seed = [
+            { id: crypto.randomUUID(), name:'Ayesha', city:'Lahore', lang:'ur', text:'پاکستان ہمیشہ ترقی کرے، امن ہو اور تعلیم میں بہتری آئے۔', hearts:4, ts: Date.now()-7200000 },
+            { id: crypto.randomUUID(), name:'Ali', city:'Karachi', lang:'en', text:'May our homeland prosper in unity, faith and discipline.', hearts:6, ts: Date.now()-3600000 }
+        ];
+        wishes = [...seed, ...wishes];
+        localStorage.setItem('ff-seed','1'); saveWishes();
+    }
+
+    /* Form handling */
+    $('#wishForm').addEventListener('submit', e=>{
+        e.preventDefault();
+        const name = $('#name').value.trim();
+        const text = $('#wish').value.trim();
+        const city = $('#city').value.trim();
+        let lang = $('#lang').value;
+        if(!text){ $('#wish').focus(); return; }
+        if(lang === 'auto') lang = isUrdu(text) ? 'ur' : 'en';
+        const item = { id: crypto.randomUUID(), name: name||undefined, text, city: city||undefined, lang, hearts:0, ts: Date.now() };
+        wishes.unshift(item);
+        saveWishes();
+        $('#wish').value = ''; $('#name').value=''; $('#city').value='';
+        renderWishes();
+        spawnConfetti(40);
+    });
+
+    $('#clearBtn').addEventListener('click', ()=>{
+        if(confirm('Clear all wishes stored locally? This affects only this browser.')){
+            localStorage.removeItem(storeKey);
+            wishes = [];
+            renderWishes();
+        }
+    });
+
+    /* Filter / search / sort */
+    $('#filterLang').addEventListener('change', e=>{ state.filter=e.target.value; renderWishes(); });
+    $('#sortBy').addEventListener('change', e=>{ state.sort=e.target.value; renderWishes(); });
+    $('#search').addEventListener('input', e=>{ state.q=e.target.value.toLowerCase(); renderWishes(); });
+
+    /* Initial render */
+    renderWishes();
+
+    /* Small UX: allow quick hoist on double-click flag area */
+    document.querySelector('.flag-viewport').addEventListener('dblclick', animateHoist);
+
+    /* Allow user gesture to enable anthem playback: play/pause on any tap */
+    let audioEnabled = false;
+    document.addEventListener('pointerdown', ()=>{
+        if(!audioEnabled){ try{ anthem.play().then(()=>anthem.pause()); }catch(e){} audioEnabled=true; }
+    }, { once:true });
+
+</script>
+</body>
+</html>
