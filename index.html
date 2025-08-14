@@ -52,26 +52,36 @@
     <div class="wish-form-section">
         <h2>Send Your Wish for Pakistan 🇵🇰</h2>
         <form id="wishForm">
-            <input type="text" id="name" placeholder="Your Name (optional)">
-            <input type="text" id="city" placeholder="City (optional)">
+            <label>Your Name</label>
+            <input type="text" id="name" ><br>
+            <label>City (optional)</label>
+            <input type="text" id="city" ><br>
             <select id="lang">
                 <option value="auto">Language: Auto Detect</option>
                 <option value="en">English</option>
                 <option value="ur">Urdu</option>
             </select>
             <textarea id="wish" placeholder="Write your wish..." required></textarea>
-            <button type="submit">Send Wish</button>
+            <button class="submit" type="submit">Send Wish</button>
         </form>
     </div>
+<div class="txt-container" >
+    <h2 class="title">اپنی دعا، اپنا خواب — 14 اگست کے نام</h2>
+    <p class="subtitle">Write your wish for Pakistan’s future and pin it to a living wall of hopes from across the country and the world.</p>
+    <div class="meta">
+        <span class="pill">💚 Built for Independence Day</span>
+        <span class="pill" id="wishCount">📝 0 wishes</span>
+        <span class="pill" id="loveCount">❤️ 0 hearts</span>
+</div>
 
-    <!-- Wish Display Section -->
-    <div class="wish-display-section">
-        <h2>Wishes Wall</h2>
-        <div id="grid" class="wish-grid"></div>
-        <div id="empty" class="empty-msg">No wishes yet. Be the first to send your wish!</div>
-    </div>
 </section>
 
+<!-- Wish Display Section -->
+<div class="wish-display-section">
+    <h2>Wishes Wall</h2>
+    <div id="grid" class="wish-grid"></div>
+    <div id="empty" class="empty-msg">No wishes yet. Be the first to send your wish!</div>
+</div>
 <canvas id="confettiCanvas"></canvas>
 <canvas id="fireworksCanvas"></canvas>
 
