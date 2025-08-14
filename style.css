@@ -326,6 +326,7 @@ section {
     border: 1px solid #ccc;
     font-size: 1rem;
     background: transparent;
+    color: white;
 }
 #wishForm input{
     height: 38px;
