@@ -1,15 +1,27 @@
-FreedomFrame is an interactive web platform that combines the spirit of celebration with the power of connection.
+FreedomFrame
 
-🌟 Key Features:
+FreedomFrame is an interactive web platform that celebrates Pakistan’s Independence Day by combining celebration with community connection.
 
-Virtual Flag Hoisting Ceremony – Click to hoist Pakistan’s flag with animations, music, and celebratory effects.
+🌟 Features
+
+Virtual Flag Hoisting Ceremony – Click to hoist Pakistan’s flag with animations, music, and effects.
 
 Digital Wish Wall – Share your Independence Day wishes and see them displayed instantly.
 
-Real-Time Participation (Upcoming) – Live updates as people from across Pakistan join.
+Real-Time Participation (Upcoming) – Live updates as people from across Pakistan join in.
 
-Responsive Design – Works seamlessly on mobile, tablet, and desktop.
+Responsive Design – Works on desktop, tablet, and mobile devices.
 
-🛠 Tech Stack: HTML, CSS, JavaScript (with planned Firebase integration).
+🛠 Tech Stack
 
-💚 Let’s celebrate, connect, and frame our freedom together!
+- HTML
+
+- CSS
+
+- JavaScript (with planned Firebase integration)
+
+🎯 Purpose
+
+To create a simple, engaging space for celebrating Pakistan’s Independence Day online, bringing people together through shared experiences.
+
+💚 Celebrate. Connect. Frame our Freedom.
