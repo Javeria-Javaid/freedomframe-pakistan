@@ -450,4 +450,95 @@ footer {
 
 
 
+/* Tablets & below */
+@media (max-width: 1024px) {
+    .hero {
+        flex-direction: column;
+        padding: 40px 20px;
+        text-align: center;
+        gap: 30px;
+    }
+    .hero-left, .hero-right {
+        width: 100%;
+        max-width: none;
+    }
+    .hero-left h1 {
+        font-size: 42px;
+        line-height: 48px;
+    }
+    .wish-section {
+        flex-direction: column;
+        padding: 40px 20px;
+        gap: 40px;
+    }
+    .wish-form-section, .txt-container {
+        width: 100%;
+        margin: 0;
+    }
+    .wish-display-section {
+        margin: 40px 20px;
+    }
+    .wish-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Mobile phones */
+@media (max-width: 600px) {
+    .plain-btn {
+        margin-top:  112px;
+    }
+    header {
+        flex-direction: column;
+        gap: 10px;
+        padding: 15px;
+        text-align: center;
+    }
+    .wish-form-section{
+        background: none;
+    }
+    .brand {
+        flex-direction: column;
+        gap: 5px;
+    }
+    .hero {
+        padding: 20px 15px;
+    }
+    .primary-txt {
+        font-size: 32px;
+        line-height: 36px;
+    }
+    .secondary-txt {
+        font-size: 18px;
+    }
+    .wish-section {
+        padding: 20px 15px;
+        gap: 25px;
+    }
+    .wish-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    .actions {
+        justify-content: center;
+    }
+    button, .btn {
+        padding: 10px 14px;
+        font-size: 14px;
+    }
+    .txt-container .title {
+        font-size: 32px;
+        text-align: center;
+    }
+    .txt-container .subtitle {
+        font-size: 18px;
+        text-align: center;
+    }
+    .meta {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+    }
+}
 
