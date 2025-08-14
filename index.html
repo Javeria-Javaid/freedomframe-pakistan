@@ -3,103 +3,122 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FreedomFrame-Pakistan </title>
+    <title>FreedomFrame-Pakistan</title>
+
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Cedarville+Cursive&display=swap" rel="stylesheet">
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 </head>
 <body>
-<!-- header -->
-<header>
-    <div class="brand">
-    <img class="icon" src="tower.png">
-        <h1>FreedomFrame - Pakistan</h1>
+
+<!-- Header -->
+<header class="d-flex justify-content-between align-items-center p-3 bg-dark text-white fixed-top">
+    <div class="d-flex align-items-center gap-3">
+        <img class="icon" src="tower.png" alt="Minar-e-Pakistan" style="height:40px;">
+        <h1 class="h4 mb-0">FreedomFrame - Pakistan</h1>
     </div>
-    <div class="actions">
-        <button class="secondary" id="celebrateBtn" title="Celebrate now">🎆 Celebrate</button>
-        <a class="btn" id="btnShare">📤 Share</a>
+    <div class="d-flex gap-2">
+        <button class="btn btn-outline-light" id="celebrateBtn" title="Celebrate now">🎆 Celebrate</button>
+        <a class="btn btn-success" id="btnShare">📤 Share</a>
     </div>
 </header>
 
+<!-- Hero & Hoisting -->
+<section class="container mt-5 pt-5">
+    <div class="row align-items-center">
+        <!-- Left Content -->
+        <div class="col-lg-6 col-12 mb-4">
+            <button class="btn btn-outline-secondary mb-2 plain-btn">14 August • FreedomFrame</button>
+            <h1 class="primary-txt">Pakistan — A nation united with hope</h1>
+            <p class="secondary-txt italic-txt">Boldly raise the flag of unity and carry dreams forward.</p>
+            <p class="secondary-txt">Raise the flag together, add your heartfelt wish for Pakistan, and share the spirit of unity with people across the nation.</p>
+            <button class="btn btn-success me-2" id="hoistBtn">Hoist The Flag</button>
+            <button class="btn btn-primary" id="leaveWishBtn">Leave a Wish</button>
+        </div>
 
-<!-- hoisting section -->
-<!-- Hero Section -->
-<div class="hero">
-    <div class="hero-left">
-        <button class="plain-btn">14 August • FreedomFrame</button>
-        <h1 class="primary-txt"> Pakistan — A nation united with hope</h1>
-        <p class="secondary-txt italic-txt">Boldly raise the flag of unity and carry dreams forward.</p>
-        <p class="secondary-txt">Raise the flag together, add your heartfelt wish for Pakistan,
-            and share the spirit of unity with people across the nation.</p>
-        <button id="hoistBtn">Hoist The Flag</button>
-        <button id="leaveWishBtn">Leave a Wish</button>
-    </div>
-
-    <!-- Hoisting Section -->
-    <div class="hero-right">
-        <div class="scene-card">
-            <div class="celebration" id="celebrateMsg">پاکستان زندہ باد • Pakistan Zindabad!</div>
-            <div class="flag-viewport">
-                <!-- Pole -->
-                <div class="pole"></div>
-                <!-- Finial -->
-                <div class="finial"></div>
-                <!-- Flag -->
-                <div class="flag-wrap" id="flagWrap">
-                    <img src="world.png" alt="Pakistan Flag" class="flag-img" id="flag">
+        <!-- Right Flag Hoisting -->
+        <div class="col-lg-6 col-12">
+            <div class="scene-card p-3 border rounded text-center">
+                <div class="celebration" id="celebrateMsg">پاکستان زندہ باد • Pakistan Zindabad!</div>
+                <div class="flag-viewport mx-auto">
+                    <div class="pole"></div>
+                    <div class="finial"></div>
+                    <div class="flag-wrap" id="flagWrap">
+                        <img src="world.png" alt="Pakistan Flag" class="flag-img" id="flag">
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
-
-</div>
-
-<section  id="wishSection"  class="wish-section">
-    <!-- Wish Form Section -->
-    <div class="wish-form-section">
-        <h2>Send Your Wish for Pakistan</h2>
-        <form id="wishForm">
-            <label>Your Name</label>
-            <input type="text" id="name" ><br>
-            <label>City (optional)</label>
-            <input type="text" id="city" ><br>
-            <select id="lang">
-                <option value="auto">Language: Auto Detect</option>
-                <option value="en">English</option>
-                <option value="ur">Urdu</option>
-            </select>
-            <textarea id="wish" placeholder="Write your wish..." required></textarea>
-            <button class="submit" type="submit">Send Wish</button>
-        </form>
-    </div>
-<div class="txt-container" >
-    <h2 class="title">اپنی دعا، اپنا خواب — 14 اگست کے نام</h2>
-    <p class="subtitle">Write your wish for Pakistan’s future and pin it to a living wall of hopes from across the country and the world.</p>
-    <div class="meta">
-        <span class="pill">💚 Built for Independence Day</span>
-        <span class="pill" id="wishCount">📝 0 wishes</span>
-        <span class="pill" id="loveCount">❤️ 0 hearts</span>
-</div>
-</div>
 </section>
 
-<!-- Wish Display Section -->
-<div class="wish-display-section">
-    <h2>Wishes Wall</h2>
-    <div id="grid" class="wish-grid"></div>
-    <div id="empty" class="empty-msg">No wishes yet. Be the first to send your wish!</div>
-</div>
+<!-- Wish Section -->
+<section id="wishSection" class="container my-5 wish-section">
+    <div class="row">
+        <!-- Wish Form -->
+        <div class="col-lg-6 col-12 mb-4">
+            <h2>Send Your Wish for Pakistan</h2>
+            <form id="wishForm">
+                <label>Your Name</label>
+                <input type="text" id="name" class="form-control mb-2">
+                <label>City (optional)</label>
+                <input type="text" id="city" class="form-control mb-2">
+                <select id="lang" class="form-select mb-2">
+                    <option value="auto">Language: Auto Detect</option>
+                    <option value="en">English</option>
+                    <option value="ur">Urdu</option>
+                </select>
+                <textarea id="wish" placeholder="Write your wish..." required class="form-control mb-3"></textarea>
+                <button class="btn btn-success submit" type="submit">Send Wish</button>
+            </form>
+        </div>
 
-<footer>
-    <div class="footer-container">
-        <p>© 2025 FreedomFrame - Pakistan. Created by Javeria Javaid.</p>
-
+        <!-- Wish Text & Stats -->
+        <div class="col-lg-6 col-12 txt-container">
+            <h2 class="title">اپنی دعا، اپنا خواب — 14 اگست کے نام</h2>
+            <p class="subtitle">Write your wish for Pakistan’s future and pin it to a living wall of hopes from across the country and the world.</p>
+            <div class="meta d-flex flex-wrap gap-2">
+                <span class="pill">💚 Built for Independence Day</span>
+                <span class="pill" id="wishCount">📝 0 wishes</span>
+                <span class="pill" id="loveCount">❤️ 0 hearts</span>
+            </div>
         </div>
     </div>
+</section>
+
+<!-- Wish Display -->
+<section class="container my-5 wish-display-section">
+    <h2 class="mb-4">Wishes Wall</h2>
+    <div id="grid" class="wish-grid row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3"></div>
+    <div id="empty" class="empty-msg text-muted">No wishes yet. Be the first to send your wish!</div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-dark text-white py-3 mt-5">
+    <div class="container text-center">
+        <p class="mb-0">© 2025 FreedomFrame - Pakistan. Created by Javeria Javaid.</p>
+    </div>
 </footer>
+
 <canvas id="confettiCanvas"></canvas>
 <canvas id="fireworksCanvas"></canvas>
 
+<script>
+    // Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyCs2qw9mhsGuYROwfRD_2yA_KXvWMlbmTY",
+        authDomain: "freedomframe-pakistan.firebaseapp.com",
+        projectId: "freedomframe-pakistan",
+        storageBucket: "freedomframe-pakistan.appspot.com",
+        messagingSenderId: "247753657775",
+        appId: "1:247753657775:web:34ec45a2a9a94ef8f6335a"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+</script>
 <script src="script.js"></script>
 </body>
 </html>

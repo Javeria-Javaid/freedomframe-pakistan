@@ -1,12 +1,36 @@
+// ===== Firebase Configuration =====
+const firebaseConfig = {
+    apiKey: "AIzaSyCs2qw9mhsGuYROwfRD_2yA_KXvWMlbmTY",
+    authDomain: "freedomframe-pakistan.firebaseapp.com",
+    projectId: "freedomframe-pakistan",
+    storageBucket: "freedomframe-pakistan.appspot.com",
+    messagingSenderId: "247753657775",
+    appId: "1:247753657775:web:34ec45a2a9a94ef8f6335a"
+};
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+// ===== DOM Elements =====
 const flagWrap = document.getElementById('flagWrap');
 const flagImg = document.getElementById('flag');
 const hoistBtn = document.getElementById('hoistBtn');
 const celebrateBtn = document.getElementById('celebrateBtn');
 const celebrationMsg = document.getElementById('celebrateMsg');
+const wishForm = document.getElementById('wishForm');
+const nameInput = document.getElementById('name');
+const cityInput = document.getElementById('city');
+const wishInput = document.getElementById('wish');
+const grid = document.getElementById('grid');
+const emptyMsg = document.getElementById('empty');
+const wishCountElem = document.getElementById('wishCount');
+const loveCountElem = document.getElementById('loveCount');
+const leaveBtn = document.getElementById('leaveWishBtn');
+const wishSection = document.getElementById('wishSection');
 
+// ===== Animation Setup =====
 let isHoisted = false;
-
-// ===== Canvas setup =====
 const confetti = document.getElementById('confettiCanvas');
 const fireworks = document.getElementById('fireworksCanvas');
 const cctx = confetti.getContext('2d');
@@ -53,7 +77,7 @@ function boom(x, y) {
     }
 }
 
-// ===== Animation loop =====
+// ===== Animation Loop =====
 (function step() {
     requestAnimationFrame(step);
 
@@ -86,20 +110,20 @@ function boom(x, y) {
     });
 })();
 
-// ===== Celebration trigger =====
+// ===== Celebration Functions =====
 function celebrate() {
     sprinkle();
     for (let i = 0; i < 5; i++) {
         setTimeout(() => {
             const x = Math.random() * window.innerWidth;
-            const y = Math.random() * window.innerHeight * 0.5; // upper half
+            const y = Math.random() * window.innerHeight * 0.5;
             boom(x, y);
         }, i * 500);
     }
     celebrationMsg.classList.add('show');
 }
 
-// ===== Flag hoisting =====
+// ===== Flag Hoisting =====
 hoistBtn.addEventListener('click', () => {
     if (!isHoisted) {
         flagWrap.style.bottom = "calc(77% - 80px)";
@@ -108,51 +132,22 @@ hoistBtn.addEventListener('click', () => {
 
         setTimeout(() => {
             flagImg.classList.add('flag-wave');
-            celebrate(); // auto trigger celebration after hoist
+            celebrate();
         }, 1500);
 
     } else {
         flagWrap.style.bottom = "0";
         isHoisted = false;
         hoistBtn.textContent = "Hoist the Flag";
-
         flagImg.classList.remove('flag-wave');
         celebrationMsg.classList.remove('show');
     }
 });
 
-// ===== Celebrate button =====
+// ===== Celebrate Button =====
 celebrateBtn.addEventListener('click', celebrate);
 
-// ===== Sample Wishes =====
-const sampleWishes = [
-    { name: "Anonymous", city: "", text: "May Pakistan prosper and shine forever!", likes: 1 },
-    { name: "Anonymous", city: "", text: "Happy Independence Day to all Pakistanis!", likes: 1 },
-    { name: "Anonymous", city: "", text: "Unity and progress for our nation.", likes: 2 }
-];
-
-// ===== DOM Elements =====
-const wishForm = document.getElementById('wishForm');
-const nameInput = document.getElementById('name');
-const cityInput = document.getElementById('city');
-const langSelect = document.getElementById('lang');
-const wishInput = document.getElementById('wish');
-const grid = document.getElementById('grid');
-const emptyMsg = document.getElementById('empty');
-const wishCountElem = document.getElementById('wishCount');
-const loveCountElem = document.getElementById('loveCount');
-
-// ===== Data =====
-let wishes = [...sampleWishes];
-
-// ===== Functions =====
-function updateCounters() {
-    const totalWishes = wishes.length;
-    const totalHearts = wishes.reduce((sum, w) => sum + w.likes, 0);
-    wishCountElem.textContent = `📝 ${totalWishes} wishes`;
-    loveCountElem.textContent = `❤️ ${totalHearts} hearts`;
-}
-
+// ===== Wish Functions =====
 function createWishElement(wish, index) {
     const div = document.createElement('div');
     div.className = 'wish';
@@ -161,7 +156,7 @@ function createWishElement(wish, index) {
         <div class="metaRow">
             <span>${wish.name || "Anonymous"}${wish.city ? ", " + wish.city : ""}</span>
             <span>
-                <button class="like-btn" data-index="${index}">❤️ ${wish.likes}</button>
+                <button class="like-btn" data-id="${wish.id}">❤️ ${wish.likes}</button>
                 <button class="share-btn" data-index="${index}">📤</button>
             </span>
         </div>
@@ -169,56 +164,99 @@ function createWishElement(wish, index) {
     return div;
 }
 
-function renderWishes() {
-    grid.innerHTML = '';
-    if (wishes.length === 0) {
-        emptyMsg.style.display = 'block';
-    } else {
-        emptyMsg.style.display = 'none';
-        wishes.forEach((wish, idx) => {
-            const wishElem = createWishElement(wish, idx);
-            grid.appendChild(wishElem);
-        });
+function updateCounters() {
+    const totalWishes = wishes.length;
+    const totalHearts = wishes.reduce((sum, w) => sum + w.likes, 0);
+    wishCountElem.textContent = `📝 ${totalWishes} wishes`;
+    loveCountElem.textContent = `❤️ ${totalHearts} hearts`;
+}
+
+// ===== Database Functions =====
+let wishes = []; // This will store our wishes from Firestore
+
+async function renderWishes() {
+    try {
+        const snapshot = await db.collection("wishes")
+            .orderBy("timestamp", "desc")
+            .get();
+
+        wishes = snapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+        }));
+
+        grid.innerHTML = '';
+        if (wishes.length === 0) {
+            emptyMsg.style.display = 'block';
+        } else {
+            emptyMsg.style.display = 'none';
+            wishes.forEach((wish, idx) => {
+                grid.appendChild(createWishElement(wish, idx));
+            });
+        }
+        updateCounters();
+    } catch (error) {
+        console.error("Error loading wishes:", error);
+        alert("Failed to load wishes. Please refresh the page.");
     }
-    updateCounters();
 }
 
 // ===== Event Listeners =====
-
-// Submit Wish
-wishForm.addEventListener('submit', function(e) {
+wishForm.addEventListener('submit', async (e) => {
     e.preventDefault();
+
+    // Basic validation
+    if (!wishInput.value.trim()) {
+        alert("Please write your wish before submitting!");
+        return;
+    }
+
     const newWish = {
         name: nameInput.value.trim() || "Anonymous",
         city: cityInput.value.trim(),
         text: wishInput.value.trim(),
-        likes: 0
+        likes: 0,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
     };
-    wishes.push(newWish);
-    renderWishes();
-    wishForm.reset();
-});
 
-// Like & Share buttons (Event Delegation)
-grid.addEventListener('click', function(e) {
-    const index = e.target.dataset.index;
-    if (e.target.classList.contains('like-btn')) {
-        wishes[index].likes++;
-        renderWishes();
-    } else if (e.target.classList.contains('share-btn')) {
-        const textToCopy = `"${wishes[index].text}" — ${wishes[index].name || "Anonymous"}`;
-        navigator.clipboard.writeText(textToCopy).then(() => {
-            alert('Wish copied to clipboard!');
-        });
+    try {
+        await db.collection("wishes").add(newWish);
+        wishForm.reset();
+    } catch (error) {
+        console.error("Error adding wish:", error);
+        alert("Failed to submit wish. Please try again.");
     }
 });
 
-// ===== Initialize =====
-renderWishes();
-const leaveBtn = document.getElementById('leaveWishBtn');
-const wishSection = document.getElementById('wishSection');
+grid.addEventListener('click', async (e) => {
+    if (e.target.classList.contains('like-btn')) {
+        const wishId = e.target.dataset.id;
+        try {
+            await db.collection("wishes").doc(wishId).update({
+                likes: firebase.firestore.FieldValue.increment(1)
+            });
+            // Re-render to show updated likes
+            renderWishes();
+        } catch (error) {
+            console.error("Error updating likes:", error);
+        }
+    } else if (e.target.classList.contains('share-btn')) {
+        const index = e.target.dataset.index;
+        const textToCopy = `"${wishes[index].text}" — ${wishes[index].name || "Anonymous"}`;
+        try {
+            await navigator.clipboard.writeText(textToCopy);
+            alert('Wish copied to clipboard!');
+        } catch (error) {
+            console.error("Failed to copy:", error);
+        }
+    }
+});
 
 leaveBtn.addEventListener('click', () => {
     wishSection.scrollIntoView({ behavior: 'smooth' });
 });
 
+// ===== Initialize App =====
+document.addEventListener('DOMContentLoaded', () => {
+    renderWishes();
+});
