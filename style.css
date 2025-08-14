@@ -495,9 +495,7 @@ footer {
         padding: 15px;
         text-align: center;
     }
-    .wish-form-section{
-        background: none;
-    }
+    
     .brand {
         flex-direction: column;
         gap: 5px;
@@ -513,7 +511,7 @@ footer {
         font-size: 18px;
     }
     .wish-section {
-        padding: 20px 15px;
+        padding: 20px 40px;
         gap: 25px;
     }
     .wish-grid {
