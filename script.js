@@ -4,6 +4,7 @@ const hoistBtn = document.getElementById('hoistBtn');
 const celebrateBtn = document.getElementById('celebrateBtn');
 const celebrationMsg = document.getElementById('celebrateMsg');
 
+
 let isHoisted = false;
 
 // ===== Canvas setup =====
