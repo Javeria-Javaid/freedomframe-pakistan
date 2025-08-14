@@ -300,8 +300,8 @@ section {
     font-size: 19px;
 }
 .wish-display-section{
-    width: 80%;
-    margin: 70px 50px 50px 150px;
+    width: 78%;
+    margin: 70px 75px 50px 150px;
 
 }
 .wish-form-section h2,
@@ -349,7 +349,7 @@ section {
     transition: background 0.3s ease;
 }
 .submit{
-    width: 20%;
+    width: 35%;
 }
 #wishForm button:hover {
     background: #004d00;
@@ -451,20 +451,3 @@ footer {
 
 
 
-@media (max-width: 1200px) {
-    .wish-grid {
-        grid-template-columns: repeat(3, 1fr); /* 3 per row */
-    }
-}
-
-@media (max-width: 900px) {
-    .wish-grid {
-        grid-template-columns: repeat(2, 1fr); /* 2 per row */
-    }
-}
-
-@media (max-width: 600px) {
-    .wish-grid {
-        grid-template-columns: 1fr; /* 1 per row on small screens */
-    }
-}
