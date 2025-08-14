@@ -1,7 +1,7 @@
 
 body{
     margin: 0;
-    padding: 0;
+    padding-top: 100px;
     background: linear-gradient(135deg, #006A4E, #00805D),
     url('EmeraldGreenbg.jpg');
     background-size: cover;
@@ -17,7 +17,11 @@ header{
     gap: 150px;
     background: linear-gradient(180deg, rgba(10,32,22,.85), rgba(10,32,22,.55));
     color: white;
-
+    padding: 10px 5px 15px 5px;
+    position: fixed;
+    top: 0;               /* top edge */
+    left: 0;
+    width: 100%;
 }
 
 .brand{
@@ -107,11 +111,7 @@ button:hover{
 .scene-card {
     width: 100%;
     max-width: 420px;
-    background: linear-gradient(180deg, rgba(10,32,22,.85), rgba(10,32,22,.55));
-    border-radius: 18px;
     padding: 24px;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.1);
     text-align: center;
 }
 
@@ -135,6 +135,7 @@ button:hover{
     border-radius: 8px;
     box-shadow: inset -1px 0 2px rgba(0, 0, 0, 0.2);
     z-index: 1;
+
 }
 
 .finial {
@@ -147,6 +148,7 @@ button:hover{
     border-radius: 50%;
     background: radial-gradient(circle at 30% 30%, #fff, #d7c08d);
     z-index: 2;
+
 }
 
 
@@ -160,6 +162,21 @@ button:hover{
     transform-origin: left center;
     z-index: 3;
     transition: bottom 2.0s ease-in-out; /* hoisting animation */
+
+}
+#flagWrap, .pole, .finial {
+    opacity: 1;
+    transition: opacity 0.5s, bottom 2s ease-in-out;
+}
+
+.show-flag #flagWrap,
+.show-flag .pole,
+.show-flag .finial {
+    opacity: 1;
+}
+
+#flagWrap.hoist {
+    bottom: 90%; /* adjust according to pole height */
 }
 .flag-img {
     width: 100%;
@@ -253,17 +270,34 @@ section {
     align-items: center;
     justify-content: space-between;
     padding: 70px 50px 50px 150px;
-    gap: 50px;
+    gap: 100px;
 
 }
 
 .wish-form-section, .wish-display-section {
-    flex: 1 1 400px;
+    width: 42%;
     padding: 1.5rem;
     border-radius: 12px;
     box-shadow: 0 6px 15px rgba(0,0,0,0.1);
     background: linear-gradient(180deg, rgba(10,32,22,.85), rgba(10,32,22,.55));
-    width: 52%;
+}
+.txt-container{
+    width:  45%;
+    color: white;
+    margin-left: 120px;
+}
+.title{
+    font-size: 58px;
+    color: white;
+
+}
+.subtitle {
+    font-size: 25px;
+    color: #afaf22;
+
+}
+.pill{
+    font-size: 19px;
 }
 .wish-display-section{
     width: 80%;
@@ -283,12 +317,7 @@ section {
     gap: 1rem;
     color: white;
 }
-.txt-container{
-    flex: 0 0 35%;
-    max-width: 420px;
-    color: white;
-    margin-left: 120px;
-}
+
 #wishForm input,
 #wishForm select,
 #wishForm textarea {
@@ -328,22 +357,70 @@ section {
 
 .wish-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(4, 1fr); /* exactly 4 columns */
+    gap: 1.5rem;
+}
+.wish {
+    background: rgba(255, 255, 255, 0.08); /* subtle transparent card */
+    backdrop-filter: blur(8px); /* glassmorphism effect */
+    border-radius: 16px;
+    padding: 1rem 1.2rem;
+    position: relative;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+.wish:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+}
+.wish p {
+    font-size: 1.05rem;
+    line-height: 1.5rem;
+    color: #f8f8f8;
+    margin: 0;
 }
 
-.wish {
-    padding: 1rem;
-    border-radius: 10px;
-    position: relative;
-}
 
 .wish .metaRow {
     display: flex;
     justify-content: space-between;
-    margin-top: 0.5rem;
+    align-items: center;
+    margin-top: 0.75rem;
     font-size: 0.85rem;
-    color: #555;
+    color: #dcdcdc;
+}
+
+.wish .like-btn, .wish .share-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 8px;
+    padding: 4px 8px;
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+    font-size: 0.85rem;
+}
+
+.wish .like-btn:hover, .wish .share-btn:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: scale(1.1);
+}
+
+/* Add subtle gradient effect for festive feeling */
+.wish:nth-child(odd) {
+    background: linear-gradient(145deg, rgba(0, 106, 78, 0.2), rgba(0, 128, 93, 0.2));
+}
+
+.wish:nth-child(even) {
+    background: linear-gradient(145deg, rgba(0, 128, 93, 0.2), rgba(0, 106, 78, 0.2));
+}
+
+/* Smooth transition for likes count update */
+.like-btn::after {
+    content: '';
+    display: block;
+    transition: transform 0.2s;
 }
 
 .empty-msg {
@@ -352,8 +429,42 @@ section {
     margin-top: 2rem;
     font-style: italic;
 }
-.title{
-    font-size: 55px;
-    color: #afaf22;
 
+/* ===== Footer ===== */
+footer {
+    background: linear-gradient(180deg, rgba(10,32,22,.85), rgba(10,32,22,.55));
+    color: #fff;
+    padding: 20px 50px;
+    text-align: center;
+    font-size: 0.9rem;
+    margin-top: 50px;
+}
+
+.footer-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    font-size: 17px;
+}
+
+
+
+
+@media (max-width: 1200px) {
+    .wish-grid {
+        grid-template-columns: repeat(3, 1fr); /* 3 per row */
+    }
+}
+
+@media (max-width: 900px) {
+    .wish-grid {
+        grid-template-columns: repeat(2, 1fr); /* 2 per row */
+    }
+}
+
+@media (max-width: 600px) {
+    .wish-grid {
+        grid-template-columns: 1fr; /* 1 per row on small screens */
+    }
 }

@@ -123,3 +123,102 @@ hoistBtn.addEventListener('click', () => {
 
 // ===== Celebrate button =====
 celebrateBtn.addEventListener('click', celebrate);
+
+// ===== Sample Wishes =====
+const sampleWishes = [
+    { name: "Anonymous", city: "", text: "May Pakistan prosper and shine forever!", likes: 1 },
+    { name: "Anonymous", city: "", text: "Happy Independence Day to all Pakistanis!", likes: 1 },
+    { name: "Anonymous", city: "", text: "Unity and progress for our nation.", likes: 2 }
+];
+
+// ===== DOM Elements =====
+const wishForm = document.getElementById('wishForm');
+const nameInput = document.getElementById('name');
+const cityInput = document.getElementById('city');
+const langSelect = document.getElementById('lang');
+const wishInput = document.getElementById('wish');
+const grid = document.getElementById('grid');
+const emptyMsg = document.getElementById('empty');
+const wishCountElem = document.getElementById('wishCount');
+const loveCountElem = document.getElementById('loveCount');
+
+// ===== Data =====
+let wishes = [...sampleWishes];
+
+// ===== Functions =====
+function updateCounters() {
+    const totalWishes = wishes.length;
+    const totalHearts = wishes.reduce((sum, w) => sum + w.likes, 0);
+    wishCountElem.textContent = `📝 ${totalWishes} wishes`;
+    loveCountElem.textContent = `❤️ ${totalHearts} hearts`;
+}
+
+function createWishElement(wish, index) {
+    const div = document.createElement('div');
+    div.className = 'wish';
+    div.innerHTML = `
+        <p>${wish.text}</p>
+        <div class="metaRow">
+            <span>${wish.name || "Anonymous"}${wish.city ? ", " + wish.city : ""}</span>
+            <span>
+                <button class="like-btn" data-index="${index}">❤️ ${wish.likes}</button>
+                <button class="share-btn" data-index="${index}">📤</button>
+            </span>
+        </div>
+    `;
+    return div;
+}
+
+function renderWishes() {
+    grid.innerHTML = '';
+    if (wishes.length === 0) {
+        emptyMsg.style.display = 'block';
+    } else {
+        emptyMsg.style.display = 'none';
+        wishes.forEach((wish, idx) => {
+            const wishElem = createWishElement(wish, idx);
+            grid.appendChild(wishElem);
+        });
+    }
+    updateCounters();
+}
+
+// ===== Event Listeners =====
+
+// Submit Wish
+wishForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const newWish = {
+        name: nameInput.value.trim() || "Anonymous",
+        city: cityInput.value.trim(),
+        text: wishInput.value.trim(),
+        likes: 0
+    };
+    wishes.push(newWish);
+    renderWishes();
+    wishForm.reset();
+});
+
+// Like & Share buttons (Event Delegation)
+grid.addEventListener('click', function(e) {
+    const index = e.target.dataset.index;
+    if (e.target.classList.contains('like-btn')) {
+        wishes[index].likes++;
+        renderWishes();
+    } else if (e.target.classList.contains('share-btn')) {
+        const textToCopy = `"${wishes[index].text}" — ${wishes[index].name || "Anonymous"}`;
+        navigator.clipboard.writeText(textToCopy).then(() => {
+            alert('Wish copied to clipboard!');
+        });
+    }
+});
+
+// ===== Initialize =====
+renderWishes();
+const leaveBtn = document.getElementById('leaveWishBtn');
+const wishSection = document.getElementById('wishSection');
+
+leaveBtn.addEventListener('click', () => {
+    wishSection.scrollIntoView({ behavior: 'smooth' });
+});
+

@@ -30,27 +30,33 @@
         <p class="secondary-txt">Raise the flag together, add your heartfelt wish for Pakistan,
             and share the spirit of unity with people across the nation.</p>
         <button id="hoistBtn">Hoist The Flag</button>
-        <button>Leave a Wish</button>
+        <button id="leaveWishBtn">Leave a Wish</button>
     </div>
 
+    <!-- Hoisting Section -->
     <div class="hero-right">
         <div class="scene-card">
             <div class="celebration" id="celebrateMsg">پاکستان زندہ باد • Pakistan Zindabad!</div>
             <div class="flag-viewport">
+                <!-- Pole -->
                 <div class="pole"></div>
+                <!-- Finial -->
                 <div class="finial"></div>
+                <!-- Flag -->
                 <div class="flag-wrap" id="flagWrap">
                     <img src="world.png" alt="Pakistan Flag" class="flag-img" id="flag">
                 </div>
             </div>
         </div>
     </div>
+
+
 </div>
 
-<section class="wish-section">
+<section  id="wishSection"  class="wish-section">
     <!-- Wish Form Section -->
     <div class="wish-form-section">
-        <h2>Send Your Wish for Pakistan 🇵🇰</h2>
+        <h2>Send Your Wish for Pakistan</h2>
         <form id="wishForm">
             <label>Your Name</label>
             <input type="text" id="name" ><br>
@@ -82,6 +88,14 @@
     <div id="grid" class="wish-grid"></div>
     <div id="empty" class="empty-msg">No wishes yet. Be the first to send your wish!</div>
 </div>
+
+<footer>
+    <div class="footer-container">
+        <p>© 2025 FreedomFrame - Pakistan. Created by Javeria Javaid.</p>
+
+        </div>
+    </div>
+</footer>
 <canvas id="confettiCanvas"></canvas>
 <canvas id="fireworksCanvas"></canvas>
 
