@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FreedomFrame - Pakistan</title>
+  <style>
+    :root {
+      --primary-green: #046A38;
+      --dark-green: #01411C;
+      --white: #FFFFFF;
+      --light-gray: rgba(255, 255, 255, 0.7);
+      --glass-effect: rgba(255, 255, 255, 0.1);
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, var(--primary-green), var(--dark-green));
+      color: var(--white);
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      gap: 30px;
+    }
+
+    .wish-display {
+      flex: 2;
+      background: var(--glass-effect);
+      backdrop-filter: blur(10px);
+      border-radius: 12px;
+      padding: 25px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .wish-form {
+      flex: 1;
+      min-width: 350px;
+      background: var(--glass-effect);
+      backdrop-filter: blur(10px);
+      border-radius: 12px;
+      padding: 25px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    h2 {
+      margin-top: 0;
+      color: var(--white);
+      font-weight: 600;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 12px 15px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(0, 0, 0, 0.2);
+      color: var(--white);
+      font-family: 'Poppins', sans-serif;
+      font-size: 16px;
+    }
+
+    ::placeholder {
+      color: var(--light-gray);
+      opacity: 1;
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    button {
+      background: var(--white);
+      color: var(--primary-green);
+      border: none;
+      padding: 12px 25px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      background: rgba(255, 255, 255, 0.9);
+      transform: translateY(-2px);
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 40px 0;
+      color: var(--light-gray);
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+
+      .wish-form {
+        min-width: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="wish-display">
+    <h2>Wishes Wall</h2>
+    <div class="empty-state">
+      No wishes yet. Be the first to send your wish!
+    </div>
+    <!-- Wishes will be dynamically inserted here -->
+  </div>
+
+  <div class="wish-form">
+    <h2>Share Your Wish for Pakistan</h2>
+    <form id="wishForm">
+      <div class="form-group">
+        <label>Your Name (optional)</label>
+        <input type="text" placeholder="Enter your name">
+      </div>
+
+      <div class="form-group">
+        <label>City (optional)</label>
+        <input type="text" placeholder="Where are you from?">
+      </div>
+
+      <div class="form-group">
+        <label>Language</label>
+        <select>
+          <option value="auto">Auto Detect</option>
+          <option value="ur">Urdu</option>
+          <option value="en">English</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Your Wish</label>
+        <textarea placeholder="Write your heartfelt wish for Pakistan..."></textarea>
+      </div>
+
+      <button type="submit">Submit Wish</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  // JavaScript for form handling would go here
+</script>
+</body>
+</html>

@@ -248,35 +248,47 @@ section {
 
 /* ===== Wish Section ===== */
 .wish-section {
+    width: 80%;
     display: flex;
-    flex-wrap: wrap;
-    gap: 2rem;
-    padding: 2rem;
-    background: #f7f7f7;
+    align-items: center;
+    justify-content: space-between;
+    padding: 70px 50px 50px 150px;
+    gap: 50px;
+
 }
 
-.wish-form-section,
-.wish-display-section {
+.wish-form-section, .wish-display-section {
     flex: 1 1 400px;
-    background: #fff;
     padding: 1.5rem;
     border-radius: 12px;
     box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    background: linear-gradient(180deg, rgba(10,32,22,.85), rgba(10,32,22,.55));
+    width: 52%;
 }
+.wish-display-section{
+    width: 80%;
+    margin: 70px 50px 50px 150px;
 
+}
 .wish-form-section h2,
 .wish-display-section h2 {
     margin-bottom: 1rem;
     font-family: 'Cedarville Cursive', cursive;
-    color: #006600;
+    color:  #afaf22;
 }
 
 #wishForm {
     display: flex;
     flex-direction: column;
     gap: 1rem;
+    color: white;
 }
-
+.txt-container{
+    flex: 0 0 35%;
+    max-width: 420px;
+    color: white;
+    margin-left: 120px;
+}
 #wishForm input,
 #wishForm select,
 #wishForm textarea {
@@ -284,6 +296,17 @@ section {
     border-radius: 8px;
     border: 1px solid #ccc;
     font-size: 1rem;
+    background: transparent;
+}
+#wishForm input{
+    height: 38px;
+}
+#wishForm select{
+    width: 40%;
+    color: white;
+}
+#wishForm textarea{
+    height: 85px;
 }
 
 #wishForm button {
@@ -296,7 +319,9 @@ section {
     cursor: pointer;
     transition: background 0.3s ease;
 }
-
+.submit{
+    width: 20%;
+}
 #wishForm button:hover {
     background: #004d00;
 }
@@ -308,7 +333,6 @@ section {
 }
 
 .wish {
-    background: #e6f2e6;
     padding: 1rem;
     border-radius: 10px;
     position: relative;
@@ -327,4 +351,9 @@ section {
     color: #888;
     margin-top: 2rem;
     font-style: italic;
+}
+.title{
+    font-size: 55px;
+    color: #afaf22;
+
 }
